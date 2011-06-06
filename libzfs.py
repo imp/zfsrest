@@ -16,69 +16,69 @@ EZFS_PROPSPACE      = 2005      # bad quota or reservation
 EZFS_BADTYPE        = 2006      # dataset is not of appropriate type
 EZFS_BUSY           = 2007      # pool or dataset is busy
 EZFS_EXISTS         = 2008      # pool or dataset already exists
-#EZFS_NOENT,             # no such pool or dataset
-#EZFS_BADSTREAM,         # bad backup stream
-#EZFS_DSREADONLY,        # dataset is readonly
-#EZFS_VOLTOOBIG,         # volume is too large for 32-bit system
-#EZFS_INVALIDNAME,       # invalid dataset name
-#EZFS_BADRESTORE,        # unable to restore to destination
-#EZFS_BADBACKUP,         # backup failed
-#EZFS_BADTARGET,         # bad attach/detach/replace target
-#EZFS_NODEVICE,          # no such device in pool
-#EZFS_BADDEV,            # invalid device to add
-#EZFS_NOREPLICAS,        # no valid replicas
-#EZFS_RESILVERING,       # currently resilvering
-#EZFS_BADVERSION,        # unsupported version
-#EZFS_POOLUNAVAIL,       # pool is currently unavailable
-#EZFS_DEVOVERFLOW,       # too many devices in one vdev
-#EZFS_BADPATH,           # must be an absolute path
-#EZFS_CROSSTARGET,       # rename or clone across pool or dataset
-#EZFS_ZONED,             # used improperly in local zone
-#EZFS_MOUNTFAILED,       # failed to mount dataset
-#EZFS_UMOUNTFAILED,      # failed to unmount dataset
-#EZFS_UNSHARENFSFAILED,  # unshare(1M) failed
-#EZFS_SHARENFSFAILED,    # share(1M) failed
-#EZFS_PERM,              # permission denied
-#EZFS_NOSPC,             # out of space
-#EZFS_FAULT,             # bad address
-#EZFS_IO,                # I/O error
-#EZFS_INTR,              # signal received
-#EZFS_ISSPARE,           # device is a hot spare
-#EZFS_INVALCONFIG,       # invalid vdev configuration
-#EZFS_RECURSIVE,         # recursive dependency
-#EZFS_NOHISTORY,         # no history object
-#EZFS_POOLPROPS,         # couldn't retrieve pool props
-#EZFS_POOL_NOTSUP,       # ops not supported for this type of pool
-#EZFS_POOL_INVALARG,     # invalid argument for this pool operation
-#EZFS_NAMETOOLONG,       # dataset name is too long
-#EZFS_OPENFAILED,        # open of device failed
-#EZFS_NOCAP,             # couldn't get capacity
-#EZFS_LABELFAILED,       # write of label failed
-#EZFS_BADWHO,            # invalid permission who
-#EZFS_BADPERM,           # invalid permission
-#EZFS_BADPERMSET,        # invalid permission set name
-#EZFS_NODELEGATION,      # delegated administration is disabled
-#EZFS_UNSHARESMBFAILED,  # failed to unshare over smb
-#EZFS_SHARESMBFAILED,    # failed to share over smb
-#EZFS_BADCACHE,          # bad cache file
-#EZFS_ISL2CACHE,         # device is for the level 2 ARC
-#EZFS_VDEVNOTSUP,        # unsupported vdev type
-#EZFS_NOTSUP,            # ops not supported on this dataset
-#EZFS_ACTIVE_SPARE,      # pool has active shared spare devices
-#EZFS_UNPLAYED_LOGS,     # log device has unplayed logs
-#EZFS_REFTAG_RELE,       # snapshot release: tag not found
-#EZFS_REFTAG_HOLD,       # snapshot hold: tag already exists
-#EZFS_TAGTOOLONG,        # snapshot hold/rele: tag too long
-#EZFS_PIPEFAILED,        # pipe create failed
-#EZFS_THREADCREATEFAILED, # thread create failed
-#EZFS_POSTSPLIT_ONLINE,  # onlining a disk after splitting it
-#EZFS_SCRUBBING,         # currently scrubbing
-#EZFS_NO_SCRUB,          # no active scrub
-#EZFS_DIFF,              # general failure of zfs diff
-#EZFS_DIFFDATA,          # bad zfs diff data
-#EZFS_POOLREADONLY,      # pool is in read-only mode
-#EZFS_KEYERR,            # crypto key not present or invalid
-#EZFS_UNKNOWN
+EZFS_NOENT          = 2009      # no such pool or dataset
+EZFS_BADSTREAM      = 2010      # bad backup stream
+EZFS_DSREADONLY     = 2011      # dataset is readonly
+EZFS_VOLTOOBIG      = 2012      # volume is too large for 32-bit system
+EZFS_INVALIDNAME    = 2013      # invalid dataset name
+EZFS_BADRESTORE     = 2014      # unable to restore to destination
+EZFS_BADBACKUP      = 2015      # backup failed
+EZFS_BADTARGET      = 2016      # bad attach/detach/replace target
+EZFS_NODEVICE       = 2017      # no such device in pool
+EZFS_BADDEV         = 2018      # invalid device to add
+EZFS_NOREPLICAS     = 2019      # no valid replicas
+EZFS_RESILVERING    = 2020      # currently resilvering
+EZFS_BADVERSION     = 2021      # unsupported version
+EZFS_POOLUNAVAIL    = 2022      # pool is currently unavailable
+EZFS_DEVOVERFLOW    = 2023      # too many devices in one vdev
+EZFS_BADPATH        = 2024      # must be an absolute path
+EZFS_CROSSTARGET    = 2025      # rename or clone across pool or dataset
+EZFS_ZONED          = 2026      # used improperly in local zone
+EZFS_MOUNTFAILED    = 2027      # failed to mount dataset
+EZFS_UMOUNTFAILED   = 2028      # failed to unmount dataset
+EZFS_UNSHARENFSFAILED = 2029    # unshare(1M) failed
+EZFS_SHARENFSFAILED = 2030      # share(1M) failed
+EZFS_PERM           = 2031      # permission denied
+EZFS_NOSPC          = 2032      # out of space
+EZFS_FAULT          = 2033      # bad address
+EZFS_IO             = 2034      # I/O error
+ZFS_INTR            = 2035      # signal received
+ZFS_ISSPARE         = 2036      # device is a hot spare
+ZFS_INVALCONFIG     = 2037      # invalid vdev configuration
+ZFS_RECURSIVE       = 2038      # recursive dependency
+ZFS_NOHISTORY       = 2039      # no history object
+ZFS_POOLPROPS       = 2040      # couldn't retrieve pool props
+ZFS_POOL_NOTSUP     = 2041      # ops not supported for this type of pool
+ZFS_POOL_INVALARG   = 2042      # invalid argument for this pool operation
+ZFS_NAMETOOLONG     = 2043      # dataset name is too long
+ZFS_OPENFAILED      = 2044      # open of device failed
+ZFS_NOCAP           = 2045      # couldn't get capacity
+ZFS_LABELFAILED     = 2046      # write of label failed
+ZFS_BADWHO          = 2047      # invalid permission who
+ZFS_BADPERM         = 2048      # invalid permission
+ZFS_BADPERMSET      = 2049      # invalid permission set name
+ZFS_NODELEGATION    = 2050      # delegated administration is disabled
+ZFS_UNSHARESMBFAILED= 2051      # failed to unshare over smb
+ZFS_SHARESMBFAILED  = 2052      # failed to share over smb
+ZFS_BADCACHE        = 2053      # bad cache file
+ZFS_ISL2CACHE       = 2054      # device is for the level 2 ARC
+ZFS_VDEVNOTSUP      = 2055      # unsupported vdev type
+ZFS_NOTSUP          = 2056      # ops not supported on this dataset
+ZFS_ACTIVE_SPARE    = 2057      # pool has active shared spare devices
+ZFS_UNPLAYED_LOGS   = 2058      # log device has unplayed logs
+ZFS_REFTAG_RELE     = 2059      # snapshot release: tag not found
+ZFS_REFTAG_HOLD     = 2060      # snapshot hold: tag already exists
+ZFS_TAGTOOLONG      = 2061      # snapshot hold/rele: tag too long
+ZFS_PIPEFAILED      = 2062      # pipe create failed
+ZFS_THREADCREATEFAILED = 2063   # thread create failed
+ZFS_POSTSPLIT_ONLINE= 2064      # onlining a disk after splitting it
+ZFS_SCRUBBING       = 2065      # currently scrubbing
+ZFS_NO_SCRUB        = 2066      # no active scrub
+ZFS_DIFF            = 2067      # general failure of zfs diff
+ZFS_DIFFDATA        = 2068      # bad zfs diff data
+ZFS_POOLREADONLY    = 2069      # pool is in read-only mode
+EZFS_KEYERR         = 2070      # crypto key not present or invalid
+EZFS_UNKNOWN        = 2071
 
 class zfs_handle(C.Structure):
     pass
