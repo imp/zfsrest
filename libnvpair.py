@@ -36,6 +36,13 @@ DATA_TYPE_INT8_ARRAY,
 DATA_TYPE_UINT8_ARRAY,
 DATA_TYPE_DOUBLE) = map(C.c_uint, range(28))
 
+c_int16_p = C.POINTER(C.c_int16)
+c_int32_p = C.POINTER(C.c_int32)
+c_int64_p = C.POINTER(C.c_int64)
+c_uint16_p = C.POINTER(C.c_uint16)
+c_uint32_p = C.POINTER(C.c_uint32)
+c_uint64_p = C.POINTER(C.c_uint64)
+c_size_p = C.POINTER(C.c_size_t)
 
 #typedef struct nvpair {
 #        int32_t nvp_size;       /* size of this nvpair */
@@ -115,6 +122,8 @@ __libnvpair = C.CDLL("libnvpair.so")
 #int nvlist_alloc(nvlist_t **, uint_t, int);
 #void nvlist_free(nvlist_t *);
 #int nvlist_size(nvlist_t *, size_t *, int);
+nvlist_size             = __libnvpair.nvlist_size
+nvlist_size.argstypes   = [nvlist_ptr, c_size_p, C.c_int]
 #int nvlist_pack(nvlist_t *, char **, size_t *, int, int);
 #int nvlist_unpack(char *, size_t, nvlist_t **, int);
 #int nvlist_dup(nvlist_t *, nvlist_t **, int);
@@ -171,8 +180,15 @@ __libnvpair = C.CDLL("libnvpair.so")
 #int nvlist_lookup_uint16(nvlist_t *, const char *, uint16_t *);
 #int nvlist_lookup_int32(nvlist_t *, const char *, int32_t *);
 #int nvlist_lookup_uint32(nvlist_t *, const char *, uint32_t *);
-#int nvlist_lookup_int64(nvlist_t *, const char *, int64_t *);
-#int nvlist_lookup_uint64(nvlist_t *, const char *, uint64_t *);
+
+# int nvlist_lookup_int64(nvlist_t *, const char *, int64_t *)
+nvlist_lookup_int64             = __libnvpair.nvlist_lookup_int64
+nvlist_lookup_int64.argtypes    = [nvlist_ptr, C.c_char_p, c_int64_p]
+
+# int nvlist_lookup_uint64(nvlist_t *, const char *, uint64_t *)
+nvlist_lookup_uint64            = __libnvpair.nvlist_lookup_uint64
+nvlist_lookup_uint64.argtypes   = [nvlist_ptr, C.c_char_p, c_uint64_p]
+
 #int nvlist_lookup_string(nvlist_t *, const char *, char **);
 #int nvlist_lookup_nvlist(nvlist_t *, const char *, nvlist_t **);
 #int nvlist_lookup_boolean_array(nvlist_t *, const char *,
@@ -202,8 +218,16 @@ __libnvpair = C.CDLL("libnvpair.so")
 #/* processing nvpair */
 #nvpair_t *nvlist_next_nvpair(nvlist_t *, nvpair_t *);
 #nvpair_t *nvlist_prev_nvpair(nvlist_t *, nvpair_t *);
-#char *nvpair_name(nvpair_t *);
-#data_type_t nvpair_type(nvpair_t *);
+
+# char *nvpair_name(nvpair_t *)
+nvpair_name             = __libnvpair.nvpair_name
+nvpair_name.argstype    = [nvpair_ptr]
+nvpair_name.restype     = C.c_char_p
+
+# data_type_t nvpair_type(nvpair_t *)
+nvpair_type             = __libnvpair.nvpair_type
+nvpair_type.argstypes   = [nvpair_ptr]
+
 #int nvpair_type_is_array(nvpair_t *);
 #int nvpair_value_boolean_value(nvpair_t *, boolean_t *);
 #int nvpair_value_byte(nvpair_t *, uchar_t *);
@@ -231,6 +255,3 @@ __libnvpair = C.CDLL("libnvpair.so")
 #int nvpair_value_nvlist_array(nvpair_t *, nvlist_t ***, uint_t *);
 #int nvpair_value_hrtime(nvpair_t *, hrtime_t *);
 #int nvpair_value_double(nvpair_t *, double *);
-
-nvpair_name = __libnvpair.nvpair_name
-nvpair_type = __libnvpair.nvpair_type
