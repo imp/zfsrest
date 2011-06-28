@@ -174,6 +174,8 @@ libzfs_error_description.restype    = C.c_char_p
 
 # zpool_handle_t *zpool_open(libzfs_handle_t *, const char *);
 zpool_open              = __libzfs.zpool_open
+zpool_open.argtypes     = [libzfs_handle_ptr, C.c_char_p]
+zpool_open.restype      = zpool_handle_ptr
 
 # zpool_handle_t *zpool_open_canfail(libzfs_handle_t *, const char *);
 zpool_open_canfail      = __libzfs.zpool_open_canfail
@@ -186,6 +188,7 @@ zpool_get_name          = __libzfs.zpool_get_name
 
 # int zpool_get_state(zpool_handle_t *);
 zpool_get_state         = __libzfs.zpool_get_state
+zpool_get_state.argtypes = [zpool_handle_ptr]
 
 # char *zpool_state_to_name(vdev_state_t, vdev_aux_t);
 zpool_state_to_name     = __libzfs.zpool_state_to_name
