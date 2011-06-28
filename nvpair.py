@@ -73,7 +73,7 @@ def nvl2dict(nvl):
         elif type == libnvpair.DATA_TYPE_DOUBLE:
             pass
 
-        print "Found {name} of {type}".format(vars())
+        print "Found", name, "of", type
 
         return _data
 
