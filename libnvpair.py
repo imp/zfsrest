@@ -54,6 +54,9 @@ class nvpair_t(C.Structure):
                 ("nvp_value_elem", C.c_int32),
                 ("nvp_type", C.c_byte)]
 
+nvpair_ptr = C.POINTER(nvpair_t)
+
+
 #/* nvlist header */
 #typedef struct nvlist {
 #        int32_t         nvl_version;
@@ -69,6 +72,10 @@ class nvlist_t(C.Structure):
                 ("nvl_priv", C.c_uint64),
                 ("nvl_flag", C.c_uint32),
                 ("nvl_pad", C.c_int32)]
+
+nvlist_ptr = C.POINTER(nvlist_t)
+nvlist_ptrptr = C.POINTER(nvlist_ptr)
+
 
 __libnvpair = C.CDLL("libnvpair.so")
 
