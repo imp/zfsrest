@@ -74,8 +74,10 @@ def nvl2dict(nvl):
             pass
 
         print "Found", name, "of", type
+        # And fetch the next nvpair
+        nvp = libnvpair.nvlist_next_nvpair(nvl, None)
 
-        return _data
+    return _data
 
 
 class NVPair():
