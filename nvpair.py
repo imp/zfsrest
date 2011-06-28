@@ -18,59 +18,59 @@ def nvl2dict(nvl):
         type = libnvpair.nvpair_type(nvp)
         if type == libnvpair.DATA_TYPE_BOOLEAN:
             pass
-        elif type == DATA_TYPE_BYTE:
+        elif type == libnvpair.DATA_TYPE_BYTE:
             pass
-        elif type == DATA_TYPE_INT16:
+        elif type == libnvpair.DATA_TYPE_INT16:
             pass
-        elif type == DATA_TYPE_UINT16:
+        elif type == libnvpair.DATA_TYPE_UINT16:
             pass
-        elif type == DATA_TYPE_INT32:
+        elif type == libnvpair.DATA_TYPE_INT32:
             pass
-        elif type == DATA_TYPE_UINT32:
+        elif type == libnvpair.DATA_TYPE_UINT32:
             pass
-        elif type == DATA_TYPE_INT64:
+        elif type == libnvpair.DATA_TYPE_INT64:
             value = C.c_int64()
             value = libnvpair.nvpair_value_int64(nvp, C.byref(value))
-        elif type == DATA_TYPE_UINT64:
+        elif type == libnvpair.DATA_TYPE_UINT64:
             value = C.c_uint64()
             value = libnvpair.nvpair_value_uint64(nvp, C.byref(value))
-        elif type == DATA_TYPE_STRING:
+        elif type == libnvpair.DATA_TYPE_STRING:
             pass
-        elif type == DATA_TYPE_BYTE_ARRAY:
+        elif type == libnvpair.DATA_TYPE_BYTE_ARRAY:
             pass
-        elif type == DATA_TYPE_INT16_ARRAY:
+        elif type == libnvpair.DATA_TYPE_INT16_ARRAY:
             pass
-        elif type == DATA_TYPE_UINT16_ARRAY:
+        elif type == libnvpair.DATA_TYPE_UINT16_ARRAY:
             pass
-        elif type == DATA_TYPE_INT32_ARRAY:
+        elif type == libnvpair.DATA_TYPE_INT32_ARRAY:
             pass
-        elif type == DATA_TYPE_UINT32_ARRAY:
+        elif type == libnvpair.DATA_TYPE_UINT32_ARRAY:
             pass
-        elif type == DATA_TYPE_INT64_ARRAY:
+        elif type == libnvpair.DATA_TYPE_INT64_ARRAY:
             pass
-        elif type == DATA_TYPE_UINT64_ARRAY:
+        elif type == libnvpair.DATA_TYPE_UINT64_ARRAY:
             pass
-        elif type == DATA_TYPE_STRING_ARRAY:
+        elif type == libnvpair.DATA_TYPE_STRING_ARRAY:
             pass
-        elif type == DATA_TYPE_HRTIME:
+        elif type == libnvpair.DATA_TYPE_HRTIME:
             pass
-        elif type == DATA_TYPE_NVLIST:
+        elif type == libnvpair.DATA_TYPE_NVLIST:
             pass
-        elif type == DATA_TYPE_NVLIST_ARRAY:
+        elif type == libnvpair.DATA_TYPE_NVLIST_ARRAY:
             pass
-        elif type == DATA_TYPE_BOOLEAN_VALUE:
+        elif type == libnvpair.DATA_TYPE_BOOLEAN_VALUE:
             pass
-        elif type == DATA_TYPE_INT8:
+        elif type == libnvpair.DATA_TYPE_INT8:
             pass
-        elif type == DATA_TYPE_UINT8:
+        elif type == libnvpair.DATA_TYPE_UINT8:
             pass
-        elif type == DATA_TYPE_BOOLEAN_ARRAY:
+        elif type == libnvpair.DATA_TYPE_BOOLEAN_ARRAY:
             pass
-        elif type == DATA_TYPE_INT8_ARRAY:
+        elif type == libnvpair.DATA_TYPE_INT8_ARRAY:
             pass
-        elif type == DATA_TYPE_UINT8_ARRAY:
+        elif type == libnvpair.DATA_TYPE_UINT8_ARRAY:
             pass
-        elif type == DATA_TYPE_DOUBLE:
+        elif type == libnvpair.DATA_TYPE_DOUBLE:
             pass
 
         print "Found {name} of {type}".format(vars())
