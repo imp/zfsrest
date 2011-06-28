@@ -123,7 +123,7 @@ __libnvpair = C.CDLL("libnvpair.so")
 #void nvlist_free(nvlist_t *);
 #int nvlist_size(nvlist_t *, size_t *, int);
 nvlist_size             = __libnvpair.nvlist_size
-nvlist_size.argstypes   = [nvlist_ptr, c_size_p, C.c_int]
+nvlist_size.argtypes    = [nvlist_ptr, c_size_p, C.c_int]
 #int nvlist_pack(nvlist_t *, char **, size_t *, int, int);
 #int nvlist_unpack(char *, size_t, nvlist_t **, int);
 #int nvlist_dup(nvlist_t *, nvlist_t **, int);
@@ -216,17 +216,24 @@ nvlist_lookup_uint64.argtypes   = [nvlist_ptr, C.c_char_p, c_uint64_p]
 #boolean_t nvlist_empty(nvlist_t *);
 #
 #/* processing nvpair */
-#nvpair_t *nvlist_next_nvpair(nvlist_t *, nvpair_t *);
-#nvpair_t *nvlist_prev_nvpair(nvlist_t *, nvpair_t *);
+# nvpair_t *nvlist_next_nvpair(nvlist_t *, nvpair_t *)
+nvlist_next_nvpair              = __libnvpair.nvlist_next_nvpair
+nvlist_next_nvpair.argtypes     = [nvlist_ptr, nvpair_ptr]
+nvlist_next_nvpair.restype      = nvpair_ptr
+
+# nvpair_t *nvlist_prev_nvpair(nvlist_t *, nvpair_t *)
+nvlist_prev_nvpair              = __libnvpair.nvlist_prev_nvpair
+nvlist_prev_nvpair.argtypes     = [nvlist_ptr, nvpair_ptr]
+nvlist_prev_nvpair.restype      = nvpair_ptr
 
 # char *nvpair_name(nvpair_t *)
 nvpair_name             = __libnvpair.nvpair_name
-nvpair_name.argstype    = [nvpair_ptr]
+nvpair_name.argtypes    = [nvpair_ptr]
 nvpair_name.restype     = C.c_char_p
 
 # data_type_t nvpair_type(nvpair_t *)
 nvpair_type             = __libnvpair.nvpair_type
-nvpair_type.argstypes   = [nvpair_ptr]
+nvpair_type.argtypes    = [nvpair_ptr]
 
 #int nvpair_type_is_array(nvpair_t *);
 #int nvpair_value_boolean_value(nvpair_t *, boolean_t *);
@@ -238,7 +245,10 @@ nvpair_type.argstypes   = [nvpair_ptr]
 #int nvpair_value_int32(nvpair_t *, int32_t *);
 #int nvpair_value_uint32(nvpair_t *, uint32_t *);
 #int nvpair_value_int64(nvpair_t *, int64_t *);
-#int nvpair_value_uint64(nvpair_t *, uint64_t *);
+# int nvpair_value_uint64(nvpair_t *, uint64_t *)
+nvpair_value_uint64             = __libnvpair.nvpair_value_uint64
+nvpair_value_uint64.argtypes    = [nvpair_ptr, c_uint64_p]
+
 #int nvpair_value_string(nvpair_t *, char **);
 #int nvpair_value_nvlist(nvpair_t *, nvlist_t **);
 #int nvpair_value_boolean_array(nvpair_t *, boolean_t **, uint_t *);
