@@ -7,6 +7,8 @@
 #
 import ctypes as C
 
+import libnvpair as nv
+
 EZFS_NOMEM          = 2000      # Out of memory
 EZFS_BADPROP        = 2001      # Invalid property value
 EZFS_PROPREADONLY   = 2002      # cannot set readonly property
@@ -42,52 +44,61 @@ EZFS_PERM           = 2031      # permission denied
 EZFS_NOSPC          = 2032      # out of space
 EZFS_FAULT          = 2033      # bad address
 EZFS_IO             = 2034      # I/O error
-ZFS_INTR            = 2035      # signal received
-ZFS_ISSPARE         = 2036      # device is a hot spare
-ZFS_INVALCONFIG     = 2037      # invalid vdev configuration
-ZFS_RECURSIVE       = 2038      # recursive dependency
-ZFS_NOHISTORY       = 2039      # no history object
-ZFS_POOLPROPS       = 2040      # couldn't retrieve pool props
-ZFS_POOL_NOTSUP     = 2041      # ops not supported for this type of pool
-ZFS_POOL_INVALARG   = 2042      # invalid argument for this pool operation
-ZFS_NAMETOOLONG     = 2043      # dataset name is too long
-ZFS_OPENFAILED      = 2044      # open of device failed
-ZFS_NOCAP           = 2045      # couldn't get capacity
-ZFS_LABELFAILED     = 2046      # write of label failed
-ZFS_BADWHO          = 2047      # invalid permission who
-ZFS_BADPERM         = 2048      # invalid permission
-ZFS_BADPERMSET      = 2049      # invalid permission set name
-ZFS_NODELEGATION    = 2050      # delegated administration is disabled
-ZFS_UNSHARESMBFAILED= 2051      # failed to unshare over smb
-ZFS_SHARESMBFAILED  = 2052      # failed to share over smb
-ZFS_BADCACHE        = 2053      # bad cache file
-ZFS_ISL2CACHE       = 2054      # device is for the level 2 ARC
-ZFS_VDEVNOTSUP      = 2055      # unsupported vdev type
-ZFS_NOTSUP          = 2056      # ops not supported on this dataset
-ZFS_ACTIVE_SPARE    = 2057      # pool has active shared spare devices
-ZFS_UNPLAYED_LOGS   = 2058      # log device has unplayed logs
-ZFS_REFTAG_RELE     = 2059      # snapshot release: tag not found
-ZFS_REFTAG_HOLD     = 2060      # snapshot hold: tag already exists
-ZFS_TAGTOOLONG      = 2061      # snapshot hold/rele: tag too long
-ZFS_PIPEFAILED      = 2062      # pipe create failed
-ZFS_THREADCREATEFAILED = 2063   # thread create failed
-ZFS_POSTSPLIT_ONLINE= 2064      # onlining a disk after splitting it
-ZFS_SCRUBBING       = 2065      # currently scrubbing
-ZFS_NO_SCRUB        = 2066      # no active scrub
-ZFS_DIFF            = 2067      # general failure of zfs diff
-ZFS_DIFFDATA        = 2068      # bad zfs diff data
-ZFS_POOLREADONLY    = 2069      # pool is in read-only mode
+EZFS_INTR           = 2035      # signal received
+EZFS_ISSPARE        = 2036      # device is a hot spare
+EZFS_INVALCONFIG    = 2037      # invalid vdev configuration
+EZFS_RECURSIVE      = 2038      # recursive dependency
+EZFS_NOHISTORY      = 2039      # no history object
+EZFS_POOLPROPS      = 2040      # couldn't retrieve pool props
+EZFS_POOL_NOTSUP    = 2041      # ops not supported for this type of pool
+EZFS_POOL_INVALARG  = 2042      # invalid argument for this pool operation
+EZFS_NAMETOOLONG    = 2043      # dataset name is too long
+EZFS_OPENFAILED     = 2044      # open of device failed
+EZFS_NOCAP          = 2045      # couldn't get capacity
+EZFS_LABELFAILED    = 2046      # write of label failed
+EZFS_BADWHO         = 2047      # invalid permission who
+EZFS_BADPERM        = 2048      # invalid permission
+EZFS_BADPERMSET     = 2049      # invalid permission set name
+EZFS_NODELEGATION   = 2050      # delegated administration is disabled
+EZFS_UNSHARESMBFAILED = 2051    # failed to unshare over smb
+EZFS_SHARESMBFAILED = 2052      # failed to share over smb
+EZFS_BADCACHE       = 2053      # bad cache file
+EZFS_ISL2CACHE      = 2054      # device is for the level 2 ARC
+EZFS_VDEVNOTSUP     = 2055      # unsupported vdev type
+EZFS_NOTSUP         = 2056      # ops not supported on this dataset
+EZFS_ACTIVE_SPARE   = 2057      # pool has active shared spare devices
+EZFS_UNPLAYED_LOGS  = 2058      # log device has unplayed logs
+EZFS_REFTAG_RELE    = 2059      # snapshot release: tag not found
+EZFS_REFTAG_HOLD    = 2060      # snapshot hold: tag already exists
+EZFS_TAGTOOLONG     = 2061      # snapshot hold/rele: tag too long
+EZFS_PIPEFAILED     = 2062      # pipe create failed
+EZFS_THREADCREATEFAILED = 2063  # thread create failed
+EZFS_POSTSPLIT_ONLINE = 2064    # onlining a disk after splitting it
+EZFS_SCRUBBING      = 2065      # currently scrubbing
+EZFS_NO_SCRUB       = 2066      # no active scrub
+EZFS_DIFF           = 2067      # general failure of zfs diff
+EZFS_DIFFDATA       = 2068      # bad zfs diff data
+EZFS_POOLREADONLY   = 2069      # pool is in read-only mode
 EZFS_KEYERR         = 2070      # crypto key not present or invalid
 EZFS_UNKNOWN        = 2071
 
-class zfs_handle(C.Structure):
+class zfs_handle_t(C.Structure):
     pass
 
-class zpool_handle(C.Structure):
+zfs_handle_ptr = C.POINTER(zfs_handle_t)
+
+
+class zpool_handle_t(C.Structure):
     pass
 
-class libzfs_handle(C.Structure):
+
+zpool_handle_ptr = C.POINTER(zpool_handle_t)
+
+
+class libzfs_handle_t(C.Structure):
     pass
+
+libzfs_handle_ptr = C.POINTER(libzfs_handle_t)
 
 
 __libzfs            = C.CDLL("libzfs.so")
@@ -97,31 +108,52 @@ __libzfs            = C.CDLL("libzfs.so")
 #
 # libzfs_handle_t *libzfs_init(void);
 libzfs_init             = __libzfs.libzfs_init
+libzfs_init.argtypes    = []
+libzfs_init.restype     = libzfs_handle_ptr
+
 # void libzfs_fini(libzfs_handle_t *);
 libzfs_fini             = __libzfs.libzfs_fini
+libzfs_fini.argtypes    = [libzfs_handle_ptr]
+libzfs_fini.restype     = None
 
 # libzfs_handle_t *zpool_get_handle(zpool_handle_t *);
 zpool_get_handle        = __libzfs.zpool_get_handle
+zpool_get_handle.argtypes   = [zpool_handle_ptr]
+zpool_get_handle.restype    = libzfs_handle_ptr
+
 # libzfs_handle_t *zfs_get_handle(zfs_handle_t *);
 zfs_get_handle          = __libzfs.zfs_get_handle
+zfs_get_handle.argtypes = [zfs_handle_ptr]
+zfs_get_handle.restype  = libzfs_handle_ptr
 
 # void libzfs_print_on_error(libzfs_handle_t *, boolean_t);
 libzfs_print_on_error   = __libzfs.libzfs_print_on_error
+libzfs_print_on_error.argtypes  = [libzfs_handle_ptr, C.c_bool]
+libzfs_print_on_error.restype   = None
 
 # int libzfs_errno(libzfs_handle_t *);
 libzfs_errno            = __libzfs.libzfs_errno
+libzfs_errno.argtypes   = [libzfs_handle_ptr]
 
 # const char *libzfs_error_action(libzfs_handle_t *);
 libzfs_error_action     = __libzfs.libzfs_error_action
+libzfs_error_action.argtypes    = [libzfs_handle_ptr]
+libzfs_error_action.restype     = C.c_char_p
 
 # const char *libzfs_error_description(libzfs_handle_t *);
 libzfs_error_description = __libzfs.libzfs_error_description
+libzfs_error_description.argtypes   = [libzfs_handle_ptr]
+libzfs_error_description.restype    = C.c_char_p
 
 # void libzfs_mnttab_init(libzfs_handle_t *);
 libzfs_mnttab_init      = __libzfs.libzfs_mnttab_init
+libzfs_mnttab_init.argtypes = [libzfs_handle_ptr]
+libzfs_mnttab_init.restype  = None
 
 # void libzfs_mnttab_fini(libzfs_handle_t *);
 libzfs_mnttab_fini      = __libzfs.libzfs_mnttab_fini
+libzfs_mnttab_fini.argtypes = [libzfs_handle_ptr]
+libzfs_mnttab_fini.restype  = None
 
 # void libzfs_mnttab_cache(libzfs_handle_t *, boolean_t);
 libzfs_mnttab_cache     = __libzfs.libzfs_mnttab_cache
@@ -232,8 +264,41 @@ zpool_find_vdev_by_physpath = __libzfs.zpool_find_vdev_by_physpath
 zpool_label_disk        = __libzfs.zpool_label_disk
 
 
+#/*
+# * Functions to manage pool properties
+# */
+#extern int zpool_set_prop(zpool_handle_t *, const char *, const char *);
+#extern int zpool_get_prop(zpool_handle_t *, zpool_prop_t, char *,
+#    size_t proplen, zprop_source_t *);
+#extern uint64_t zpool_get_prop_int(zpool_handle_t *, zpool_prop_t,
+#    zprop_source_t *);
+#
+#extern const char *zpool_prop_to_name(zpool_prop_t);
+#extern const char *zpool_prop_values(zpool_prop_t);
+
+#
+#
+#
+#
+#extern zpool_status_t zpool_get_status(zpool_handle_t *, char **);
+#extern zpool_status_t zpool_import_status(nvlist_t *, char **);
+#extern void zpool_dump_ddt(const ddt_stat_t *dds, const ddt_histogram_t *ddh);
+#
+#/*
+# * Statistics and configuration functions.
+# */
+# nvlist_t *zpool_get_config(zpool_handle_t *, nvlist_t **);
+zpool_get_config            = __libzfs.zpool_get_config
+zpool_get_config.argtypes   = [zpool_handle_ptr, nv.nvlist_ptrptr]
+zpool_get_config.restype    = nv.nvlist_ptr
+#extern int zpool_refresh_stats(zpool_handle_t *, boolean_t *);
+#extern int zpool_get_errlog(zpool_handle_t *, nvlist_t **);
+
+
+
 if __name__ == "__main__":
     import pprint as pp
     pp.pprint(libzfs_init)
     a = libzfs_init()
     pp.pprint(a)
+    libzfs_fini(a)
