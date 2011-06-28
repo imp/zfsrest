@@ -50,7 +50,5 @@ if __name__ == "__main__":
 
     poolname = "test" if len(sys.argv) < 2 else sys.argv[1]
     pool = Zpool(poolname)
-    pp.pprint(pool.state)
+    pp.pprint(pool.state())
     pp.pprint(pool.config())
-    pp.pprint(a)
-    libzfs_fini(a)
