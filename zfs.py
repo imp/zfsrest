@@ -6,8 +6,20 @@
 # ctypes libzfs wrapper
 #
 import libzfs
+import libnvpair
 
 _libzfs_handle = libzfs.libzfs_init()
+
+ZPOOL_CONFIG_VERSION        = 'version'
+ZPOOL_CONFIG_POOL_NAME      = 'name'
+ZPOOL_CONFIG_POOL_STATE     = 'state'
+ZPOOL_CONFIG_POOL_TXG       = 'txg'
+ZPOOL_CONFIG_POOL_GUID      = 'pool_guid'
+ZPOOL_CONFIG_CREATE_TXG     = 'create_txg'
+ZPOOL_CONFIG_TOP_GUID       = 'top_guid'
+ZPOOL_CONFIG_VDEV_TREE      = 'vdev_tree'
+ZPOOL_CONFIG_TYPE           = 'type'
+ZPOOL_CONFIG_CHILDREN       = 'children'
 
 class Zpool():
     def __init__(self, name):
@@ -23,11 +35,14 @@ class Zpool():
     def config(self):
         return libzfs.zpool_get_config(self._handle, None)
 
-
-
-
-
-
+    def version(self):
+        cfg = self.config()
+        ver = 0
+        rc = libnvpair.nvlist_lookup_uint64(cfg,
+            ZPOOL_CONFIG_VERSION, C.pointer(ver))
+        if rc != 0:
+            raise "ERROR"
+        return ver
 
 if __name__ == "__main__":
     import sys
