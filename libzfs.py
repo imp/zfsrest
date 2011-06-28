@@ -146,26 +146,26 @@ libzfs_error_description.argtypes   = [libzfs_handle_ptr]
 libzfs_error_description.restype    = C.c_char_p
 
 # void libzfs_mnttab_init(libzfs_handle_t *);
-libzfs_mnttab_init      = __libzfs.libzfs_mnttab_init
-libzfs_mnttab_init.argtypes = [libzfs_handle_ptr]
-libzfs_mnttab_init.restype  = None
+#libzfs_mnttab_init      = __libzfs.libzfs_mnttab_init
+#libzfs_mnttab_init.argtypes = [libzfs_handle_ptr]
+#libzfs_mnttab_init.restype  = None
 
 # void libzfs_mnttab_fini(libzfs_handle_t *);
-libzfs_mnttab_fini      = __libzfs.libzfs_mnttab_fini
-libzfs_mnttab_fini.argtypes = [libzfs_handle_ptr]
-libzfs_mnttab_fini.restype  = None
+#libzfs_mnttab_fini      = __libzfs.libzfs_mnttab_fini
+#libzfs_mnttab_fini.argtypes = [libzfs_handle_ptr]
+#libzfs_mnttab_fini.restype  = None
 
 # void libzfs_mnttab_cache(libzfs_handle_t *, boolean_t);
-libzfs_mnttab_cache     = __libzfs.libzfs_mnttab_cache
+#libzfs_mnttab_cache     = __libzfs.libzfs_mnttab_cache
 
 # int libzfs_mnttab_find(libzfs_handle_t *, const char *, struct mnttab *);
-libzfs_mnttab_find      = __libzfs.libzfs_mnttab_find
+#libzfs_mnttab_find      = __libzfs.libzfs_mnttab_find
 
 # void libzfs_mnttab_add(libzfs_handle_t *, const char *, const char *, const char *);
-libzfs_mnttab_add       = __libzfs.libzfs_mnttab_add
+#libzfs_mnttab_add       = __libzfs.libzfs_mnttab_add
 
 # void libzfs_mnttab_remove(libzfs_handle_t *, const char *);
-libzfs_mnttab_remove    = __libzfs.libzfs_mnttab_remove
+#libzfs_mnttab_remove    = __libzfs.libzfs_mnttab_remove
 
 
 #
@@ -191,7 +191,7 @@ zpool_get_state         = __libzfs.zpool_get_state
 zpool_state_to_name     = __libzfs.zpool_state_to_name
 
 # void zpool_free_handles(libzfs_handle_t *);
-zpool_free_handles      = __libzfs.zpool_free_handles
+#zpool_free_handles      = __libzfs.zpool_free_handles
 
 
 #
