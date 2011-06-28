@@ -5,6 +5,7 @@
 #
 # ctypes libzfs wrapper
 #
+import ctypes as C
 import libzfs
 import libnvpair
 
@@ -37,9 +38,9 @@ class Zpool():
 
     def version(self):
         cfg = self.config()
-        ver = 0
+        ver = C.c_uint64()
         rc = libnvpair.nvlist_lookup_uint64(cfg,
-            ZPOOL_CONFIG_VERSION, C.pointer(ver))
+            ZPOOL_CONFIG_VERSION, C.byref(ver))
         if rc != 0:
             raise "ERROR"
         return ver
