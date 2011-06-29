@@ -62,7 +62,7 @@ class nvpair_t(C.Structure):
                 ("nvp_value_elem", C.c_int32),
                 ("nvp_type", C.c_byte)]
 
-nvpair_ptr = C.POINTER(nvpair_t)
+nvpair_p = C.POINTER(nvpair_t)
 
 
 #/* nvlist header */
@@ -81,8 +81,8 @@ class nvlist_t(C.Structure):
                 ("nvl_flag", C.c_uint32),
                 ("nvl_pad", C.c_int32)]
 
-nvlist_ptr = C.POINTER(nvlist_t)
-nvlist_ptrptr = C.POINTER(nvlist_ptr)
+nvlist_p = C.POINTER(nvlist_t)
+nvlist_pp = C.POINTER(nvlist_p)
 
 
 # nvp implementation version
@@ -123,7 +123,7 @@ __libnvpair = C.CDLL("libnvpair.so")
 #void nvlist_free(nvlist_t *);
 #int nvlist_size(nvlist_t *, size_t *, int);
 nvlist_size             = __libnvpair.nvlist_size
-nvlist_size.argtypes    = [nvlist_ptr, c_size_p, C.c_int]
+nvlist_size.argtypes    = [nvlist_p, c_size_p, C.c_int]
 #int nvlist_pack(nvlist_t *, char **, size_t *, int, int);
 #int nvlist_unpack(char *, size_t, nvlist_t **, int);
 #int nvlist_dup(nvlist_t *, nvlist_t **, int);
@@ -183,11 +183,11 @@ nvlist_size.argtypes    = [nvlist_ptr, c_size_p, C.c_int]
 
 # int nvlist_lookup_int64(nvlist_t *, const char *, int64_t *)
 nvlist_lookup_int64             = __libnvpair.nvlist_lookup_int64
-nvlist_lookup_int64.argtypes    = [nvlist_ptr, C.c_char_p, c_int64_p]
+nvlist_lookup_int64.argtypes    = [nvlist_p, C.c_char_p, c_int64_p]
 
 # int nvlist_lookup_uint64(nvlist_t *, const char *, uint64_t *)
 nvlist_lookup_uint64            = __libnvpair.nvlist_lookup_uint64
-nvlist_lookup_uint64.argtypes   = [nvlist_ptr, C.c_char_p, c_uint64_p]
+nvlist_lookup_uint64.argtypes   = [nvlist_p, C.c_char_p, c_uint64_p]
 
 #int nvlist_lookup_string(nvlist_t *, const char *, char **);
 #int nvlist_lookup_nvlist(nvlist_t *, const char *, nvlist_t **);
@@ -218,24 +218,27 @@ nvlist_lookup_uint64.argtypes   = [nvlist_ptr, C.c_char_p, c_uint64_p]
 #/* processing nvpair */
 # nvpair_t *nvlist_next_nvpair(nvlist_t *, nvpair_t *)
 nvlist_next_nvpair              = __libnvpair.nvlist_next_nvpair
-nvlist_next_nvpair.argtypes     = [nvlist_ptr, nvpair_ptr]
-nvlist_next_nvpair.restype      = nvpair_ptr
+nvlist_next_nvpair.argtypes     = [nvlist_p, nvpair_p]
+nvlist_next_nvpair.restype      = nvpair_p
 
 # nvpair_t *nvlist_prev_nvpair(nvlist_t *, nvpair_t *)
 nvlist_prev_nvpair              = __libnvpair.nvlist_prev_nvpair
-nvlist_prev_nvpair.argtypes     = [nvlist_ptr, nvpair_ptr]
-nvlist_prev_nvpair.restype      = nvpair_ptr
+nvlist_prev_nvpair.argtypes     = [nvlist_p, nvpair_p]
+nvlist_prev_nvpair.restype      = nvpair_p
 
 # char *nvpair_name(nvpair_t *)
 nvpair_name             = __libnvpair.nvpair_name
-nvpair_name.argtypes    = [nvpair_ptr]
+nvpair_name.argtypes    = [nvpair_p]
 nvpair_name.restype     = C.c_char_p
 
 # data_type_t nvpair_type(nvpair_t *)
 nvpair_type             = __libnvpair.nvpair_type
-nvpair_type.argtypes    = [nvpair_ptr]
+nvpair_type.argtypes    = [nvpair_p]
 
-#int nvpair_type_is_array(nvpair_t *);
+# int nvpair_type_is_array(nvpair_t *)
+nvpair_type_is_array		= __libnvpair.nvpair_type_is_array
+nvpair_type_is_array.argtypes	= [nvpair_p]
+
 #int nvpair_value_boolean_value(nvpair_t *, boolean_t *);
 #int nvpair_value_byte(nvpair_t *, uchar_t *);
 #int nvpair_value_int8(nvpair_t *, int8_t *);
@@ -247,7 +250,7 @@ nvpair_type.argtypes    = [nvpair_ptr]
 #int nvpair_value_int64(nvpair_t *, int64_t *);
 # int nvpair_value_uint64(nvpair_t *, uint64_t *)
 nvpair_value_uint64             = __libnvpair.nvpair_value_uint64
-nvpair_value_uint64.argtypes    = [nvpair_ptr, c_uint64_p]
+nvpair_value_uint64.argtypes    = [nvpair_p, c_uint64_p]
 
 #int nvpair_value_string(nvpair_t *, char **);
 #int nvpair_value_nvlist(nvpair_t *, nvlist_t **);
