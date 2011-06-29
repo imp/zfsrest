@@ -19,15 +19,20 @@ def nvl2dict(nvl):
         if type == libnvpair.DATA_TYPE_BOOLEAN:
             pass
         elif type == libnvpair.DATA_TYPE_BYTE:
-            pass
+            value = C.c_byte()
+            value = libnvpair.nvpair_value_byte(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_INT16:
-            pass
+            value = C.c_int16()
+            value = libnvpair.nvpair_value_int16(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_UINT16:
-            pass
+            value = C.c_uint16()
+            value = libnvpair.nvpair_value_uint16(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_INT32:
-            pass
+            value = C.c_int32()
+            value = libnvpair.nvpair_value_int32(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_UINT32:
-            pass
+            value = C.c_uint32()
+            value = libnvpair.nvpair_value_uint32(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_INT64:
             value = C.c_int64()
             value = libnvpair.nvpair_value_int64(nvp, C.byref(value))
@@ -61,9 +66,11 @@ def nvl2dict(nvl):
         elif type == libnvpair.DATA_TYPE_BOOLEAN_VALUE:
             pass
         elif type == libnvpair.DATA_TYPE_INT8:
-            pass
+            value = C.c_int8()
+            value = libnvpair.nvpair_value_int8(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_UINT8:
-            pass
+            value = C.c_uint8()
+            value = libnvpair.nvpair_value_uint8(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_BOOLEAN_ARRAY:
             pass
         elif type == libnvpair.DATA_TYPE_INT8_ARRAY:
@@ -74,6 +81,7 @@ def nvl2dict(nvl):
             pass
 
         print "Found", name, "of", type
+        _data[name] = value
         # And fetch the next nvpair
         nvp = libnvpair.nvlist_next_nvpair(nvl, nvp)
 
