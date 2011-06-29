@@ -36,13 +36,24 @@ DATA_TYPE_INT8_ARRAY,
 DATA_TYPE_UINT8_ARRAY,
 DATA_TYPE_DOUBLE) = map(C.c_uint, range(28))
 
-c_int16_p = C.POINTER(C.c_int16)
-c_int32_p = C.POINTER(C.c_int32)
-c_int64_p = C.POINTER(C.c_int64)
-c_uint16_p = C.POINTER(C.c_uint16)
-c_uint32_p = C.POINTER(C.c_uint32)
-c_uint64_p = C.POINTER(C.c_uint64)
-c_size_p = C.POINTER(C.c_size_t)
+c_bool_p    = C.POINTER(C.c_bool)
+c_bool_pp   = C.POINTER(c_bool_p)
+c_byte_p    = C.POINTER(C.c_byte)
+c_byte_pp   = C.POINTER(c_byte_p)
+c_uint_p    = C.POINTER(C.c_uint)
+c_uint_pp   = C.POINTER(c_uint_p)
+c_int_p     = C.POINTER(C.c_int)
+c_int_pp    = C.POINTER(c_int_p)
+c_int8_p    = C.POINTER(C.c_int8)
+c_int16_p   = C.POINTER(C.c_int16)
+c_int32_p   = C.POINTER(C.c_int32)
+c_int64_p   = C.POINTER(C.c_int64)
+c_uint8_p   = C.POINTER(C.c_uint8)
+c_uint16_p  = C.POINTER(C.c_uint16)
+c_uint32_p  = C.POINTER(C.c_uint32)
+c_uint64_p  = C.POINTER(C.c_uint64)
+c_size_p    = C.POINTER(C.c_size_t)
+c_char_pp   = C.POINTER(C.c_char_p)
 
 #typedef struct nvpair {
 #        int32_t nvp_size;       /* size of this nvpair */
@@ -120,10 +131,15 @@ __libnvpair = C.CDLL("libnvpair.so")
 #/* list management */
 
 #int nvlist_alloc(nvlist_t **, uint_t, int);
-#void nvlist_free(nvlist_t *);
+
+# void nvlist_free(nvlist_t *)
+nvlist_free             = __libnvpair.nvlist_free
+nvlist_free.argtypes    = [nvlist_p]
+
 #int nvlist_size(nvlist_t *, size_t *, int);
 nvlist_size             = __libnvpair.nvlist_size
 nvlist_size.argtypes    = [nvlist_p, c_size_p, C.c_int]
+
 #int nvlist_pack(nvlist_t *, char **, size_t *, int, int);
 #int nvlist_unpack(char *, size_t, nvlist_t **, int);
 #int nvlist_dup(nvlist_t *, nvlist_t **, int);
@@ -241,51 +257,91 @@ nvpair_type_is_array.argtypes   = [nvpair_p]
 
 # int nvpair_value_boolean_value(nvpair_t *, boolean_t *)
 nvpair_value_boolean_value	= __libnvpair.nvpair_value_boolean_value
-nvpair_value_boolean_value.argtypes = [nvpair_p, boolean_t *]
+nvpair_value_boolean_value.argtypes = [nvpair_p, C.c_bool_p]
 
-#int nvpair_value_byte(nvpair_t *, uchar_t *);
+# int nvpair_value_byte(nvpair_t *, uchar_t *)
+nvpair_value_byte               = __libnvpair.nvpair_value_byte
+nvpair_value_byte.argtypes      =  [nvpair_p, c_byte_p]
 
-#int nvpair_value_int8(nvpair_t *, int8_t *);
+# int nvpair_value_int8(nvpair_t *, int8_t *)
+nvpair_value_int8               = __libnvpair.nvpair_value_int8
+nvpair_value_int8.argtypes      =  [nvpair_p, c_int8_p]
 
-#int nvpair_value_uint8(nvpair_t *, uint8_t *);
+# int nvpair_value_uint8(nvpair_t *, uint8_t *)
+nvpair_value_uint8              = __libnvpair.nvpair_value_uint8
+nvpair_value_uint8.argtypes     =  [nvpair_p, c_uint8_p]
 
-#int nvpair_value_int16(nvpair_t *, int16_t *);
+# int nvpair_value_int16(nvpair_t *, int16_t *)
+nvpair_value_int16              = __libnvpair.nvpair_value_int16
+nvpair_value_int16.argtypes     = [nvpair_p, c_int16_p]
 
-#int nvpair_value_uint16(nvpair_t *, uint16_t *);
+# int nvpair_value_uint16(nvpair_t *, uint16_t *)
+nvpair_value_uint16             = __libnvpair.nvpair_value_uint16
+nvpair_value_uint16.argtypes    = [nvpair_p, c_uint16_p]
 
-#int nvpair_value_int32(nvpair_t *, int32_t *);
+# int nvpair_value_int32(nvpair_t *, int32_t *)
+nvpair_value_int32              = __libnvpair.nvpair_value_int32
+nvpair_value_int32.argtypes     = [nvpair_p, c_int32_p]
 
-#int nvpair_value_uint32(nvpair_t *, uint32_t *);
+# int nvpair_value_uint32(nvpair_t *, uint32_t *)
+nvpair_value_uint32             = __libnvpair.nvpair_value_uint32
+nvpair_value_uint32.argtypes    = [nvpair_p, c_uint32_p]
 
-#int nvpair_value_int64(nvpair_t *, int64_t *);
+# int nvpair_value_int64(nvpair_t *, int64_t *)
+nvpair_value_int64              = __libnvpair.nvpair_value_int64
+nvpair_value_int64.argtypes     = [nvpair_p, c_int64_p]
 
 # int nvpair_value_uint64(nvpair_t *, uint64_t *)
 nvpair_value_uint64             = __libnvpair.nvpair_value_uint64
 nvpair_value_uint64.argtypes    = [nvpair_p, c_uint64_p]
 
-#int nvpair_value_string(nvpair_t *, char **);
+# int nvpair_value_string(nvpair_t *, char **)
+nvpair_value_string             = __libnvpair.nvpair_value_string
+nvpair_value_string.argtypes    = [nvpair_p, C.c_char_p **)
 
-#int nvpair_value_nvlist(nvpair_t *, nvlist_t **);
+# int nvpair_value_nvlist(nvpair_t *, nvlist_t **)
+nvpair_value_nvlist             = __libnvpair.nvpair_value_nvlist
+nvpair_value_nvlist.argtypes    = [nvpair_p, nvlist_pp]
 
-#int nvpair_value_boolean_array(nvpair_t *, boolean_t **, uint_t *);
+# int nvpair_value_boolean_array(nvpair_t *, boolean_t **, uint_t *)
+nvpair_value_boolean_array      = __libnvpair.nvpair_value_boolean_array
+nvpair_value_boolean_array.argtypes = [nvpair_p, c_bool_pp, c_uint_p]
 
-#int nvpair_value_byte_array(nvpair_t *, uchar_t **, uint_t *);
+# int nvpair_value_byte_array(nvpair_t *, uchar_t **, uint_t *)
+nvpair_value_byte_array         = __libnvpair.nvpair_value_byte_array
+nvpair_value_byte_array.argtypes = [nvpair_p, c_byte_pp, c_uint_p]
 
-#int nvpair_value_int8_array(nvpair_t *, int8_t **, uint_t *);
+# int nvpair_value_int8_array(nvpair_t *, int8_t **, uint_t *)
+nvpair_value_int8_array         = __libnvpair.nvpair_value_int8_array
+nvpair_value_int8_array.argtypes = [nvpair_p, c_int8_pp, c_uint_p]
 
-#int nvpair_value_uint8_array(nvpair_t *, uint8_t **, uint_t *);
+# int nvpair_value_uint8_array(nvpair_t *, uint8_t **, uint_t *)
+nvpair_value_uint8_array        = __libnvpair.nvpair_value_uint8_array
+nvpair_value_uint8_array.argtypes = [nvpair_p, c_uint8_pp, c_uint_p]
 
-#int nvpair_value_int16_array(nvpair_t *, int16_t **, uint_t *);
+# int nvpair_value_int16_array(nvpair_t *, int16_t **, uint_t *)
+nvpair_value_int16_array        = __libnvpair.nvpair_value_int16_array
+nvpair_value_int16_array.argtypes = [nvpair_p, c_int16_pp, c_uint_p]
 
-#int nvpair_value_uint16_array(nvpair_t *, uint16_t **, uint_t *);
+# int nvpair_value_uint16_array(nvpair_t *, uint16_t **, uint_t *)
+nvpair_value_uint16_array       = __libnvpair.nvpair_value_uint16_array
+nvpair_value_uint16_array.argtypes = [nvpair_p, c_uint16_pp, c_uint_p]
 
-#int nvpair_value_int32_array(nvpair_t *, int32_t **, uint_t *);
+# int nvpair_value_int32_array(nvpair_t *, int32_t **, uint_t *)
+nvpair_value_int32_array        = __libnvpair.nvpair_value_int32_array
+nvpair_value_int32_array.argtypes = [nvpair_p, c_int32_pp, c_uint_p]
 
-#int nvpair_value_uint32_array(nvpair_t *, uint32_t **, uint_t *);
+# int nvpair_value_uint32_array(nvpair_t *, uint32_t **, uint_t *)
+nvpair_value_uint32_array       = __libnvpair.nvpair_value_uint32_array
+nvpair_value_uint32_array.argtypes = [nvpair_p, c_uint32_pp, c_uint_p]
 
-#int nvpair_value_int64_array(nvpair_t *, int64_t **, uint_t *);
+# int nvpair_value_int64_array(nvpair_t *, int64_t **, uint_t *)
+nvpair_value_int64_array        = __libnvpair.nvpair_value_int64_array
+nvpair_value_int64_array.argtypes = [nvpair_p, c_int64_pp, c_uint_p]
 
-#int nvpair_value_uint64_array(nvpair_t *, uint64_t **, uint_t *);
+# int nvpair_value_uint64_array(nvpair_t *, uint64_t **, uint_t *)
+nvpair_value_uint64_array       = __libnvpair.nvpair_value_uint64_array
+nvpair_value_uint64_array.argtypes = [nvpair_p, c_uint64_pp, c_uint_p]
 
 #int nvpair_value_string_array(nvpair_t *, char ***, uint_t *);
 
