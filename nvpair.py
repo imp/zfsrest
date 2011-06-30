@@ -40,7 +40,8 @@ def nvl2dict(nvl):
             value = C.c_uint64()
             libnvpair.nvpair_value_uint64(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_STRING:
-            pass
+            value = C.c_char_p()
+            libnvpair.nvpair_value_string(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_BYTE_ARRAY:
             pass
         elif type == libnvpair.DATA_TYPE_INT16_ARRAY:
@@ -80,8 +81,9 @@ def nvl2dict(nvl):
         elif type == libnvpair.DATA_TYPE_DOUBLE:
             pass
 
-        print "Found", name, "of", type
-        _data[name] = value
+        print "Found", name, "of", type, "value", value
+        if value is not None:
+            _data[name] = value.value
         # And fetch the next nvpair
         nvp = libnvpair.nvlist_next_nvpair(nvl, nvp)
 
@@ -94,5 +96,3 @@ class NVPair():
 class NVList(UserDict.IterableUserDict):
     def __init__(self, nvl):
         self.data = nvl2dict(nvl)
-
-
