@@ -34,7 +34,8 @@ class Zpool():
         return "OK"
 
     def config(self):
-        return libzfs.zpool_get_config(self._handle, None)
+        cfg = libzfs.zpool_get_config(self._handle, None)
+        config
 
     def version(self):
         cfg = self.config()
