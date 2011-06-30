@@ -20,25 +20,25 @@ def nvl2dict(nvl):
             pass
         elif type == libnvpair.DATA_TYPE_BYTE:
             value = C.c_byte()
-            value = libnvpair.nvpair_value_byte(nvp, C.byref(value))
+            libnvpair.nvpair_value_byte(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_INT16:
             value = C.c_int16()
-            value = libnvpair.nvpair_value_int16(nvp, C.byref(value))
+            libnvpair.nvpair_value_int16(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_UINT16:
             value = C.c_uint16()
-            value = libnvpair.nvpair_value_uint16(nvp, C.byref(value))
+            libnvpair.nvpair_value_uint16(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_INT32:
             value = C.c_int32()
-            value = libnvpair.nvpair_value_int32(nvp, C.byref(value))
+            libnvpair.nvpair_value_int32(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_UINT32:
             value = C.c_uint32()
-            value = libnvpair.nvpair_value_uint32(nvp, C.byref(value))
+            libnvpair.nvpair_value_uint32(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_INT64:
             value = C.c_int64()
-            value = libnvpair.nvpair_value_int64(nvp, C.byref(value))
+            libnvpair.nvpair_value_int64(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_UINT64:
             value = C.c_uint64()
-            value = libnvpair.nvpair_value_uint64(nvp, C.byref(value))
+            libnvpair.nvpair_value_uint64(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_STRING:
             pass
         elif type == libnvpair.DATA_TYPE_BYTE_ARRAY:
@@ -67,10 +67,10 @@ def nvl2dict(nvl):
             pass
         elif type == libnvpair.DATA_TYPE_INT8:
             value = C.c_int8()
-            value = libnvpair.nvpair_value_int8(nvp, C.byref(value))
+            libnvpair.nvpair_value_int8(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_UINT8:
             value = C.c_uint8()
-            value = libnvpair.nvpair_value_uint8(nvp, C.byref(value))
+            libnvpair.nvpair_value_uint8(nvp, C.byref(value))
         elif type == libnvpair.DATA_TYPE_BOOLEAN_ARRAY:
             pass
         elif type == libnvpair.DATA_TYPE_INT8_ARRAY:
