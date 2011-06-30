@@ -292,8 +292,8 @@ zpool_label_disk        = __libzfs.zpool_label_disk
 # */
 # nvlist_t *zpool_get_config(zpool_handle_t *, nvlist_t **);
 zpool_get_config            = __libzfs.zpool_get_config
-zpool_get_config.argtypes   = [zpool_handle_ptr, nv.nvlist_ptrptr]
-zpool_get_config.restype    = nv.nvlist_ptr
+zpool_get_config.argtypes   = [zpool_handle_ptr, nv.nvlist_pp]
+zpool_get_config.restype    = nv.nvlist_p
 #extern int zpool_refresh_stats(zpool_handle_t *, boolean_t *);
 #extern int zpool_get_errlog(zpool_handle_t *, nvlist_t **);
 
