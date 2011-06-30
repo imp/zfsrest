@@ -45,13 +45,21 @@ c_uint_pp   = C.POINTER(c_uint_p)
 c_int_p     = C.POINTER(C.c_int)
 c_int_pp    = C.POINTER(c_int_p)
 c_int8_p    = C.POINTER(C.c_int8)
+c_int8_pp   = C.POINTER(c_int8_p)
 c_int16_p   = C.POINTER(C.c_int16)
+c_int16_pp  = C.POINTER(c_int16_p)
 c_int32_p   = C.POINTER(C.c_int32)
+c_int32_pp  = C.POINTER(c_int32_p)
 c_int64_p   = C.POINTER(C.c_int64)
+c_int64_pp  = C.POINTER(c_int64_p)
 c_uint8_p   = C.POINTER(C.c_uint8)
+c_uint8_pp  = C.POINTER(c_uint8_p)
 c_uint16_p  = C.POINTER(C.c_uint16)
+c_uint16_pp = C.POINTER(c_uint16_p)
 c_uint32_p  = C.POINTER(C.c_uint32)
+c_uint32_pp = C.POINTER(c_uint32_p)
 c_uint64_p  = C.POINTER(C.c_uint64)
+c_uint64_pp = C.POINTER(c_uint64_p)
 c_size_p    = C.POINTER(C.c_size_t)
 c_char_pp   = C.POINTER(C.c_char_p)
 
@@ -257,7 +265,7 @@ nvpair_type_is_array.argtypes   = [nvpair_p]
 
 # int nvpair_value_boolean_value(nvpair_t *, boolean_t *)
 nvpair_value_boolean_value	= __libnvpair.nvpair_value_boolean_value
-nvpair_value_boolean_value.argtypes = [nvpair_p, C.c_bool_p]
+nvpair_value_boolean_value.argtypes = [nvpair_p, c_bool_p]
 
 # int nvpair_value_byte(nvpair_t *, uchar_t *)
 nvpair_value_byte               = __libnvpair.nvpair_value_byte
@@ -297,7 +305,7 @@ nvpair_value_uint64.argtypes    = [nvpair_p, c_uint64_p]
 
 # int nvpair_value_string(nvpair_t *, char **)
 nvpair_value_string             = __libnvpair.nvpair_value_string
-nvpair_value_string.argtypes    = [nvpair_p, C.c_char_p **)
+nvpair_value_string.argtypes    = [nvpair_p, c_char_pp]
 
 # int nvpair_value_nvlist(nvpair_t *, nvlist_t **)
 nvpair_value_nvlist             = __libnvpair.nvpair_value_nvlist
