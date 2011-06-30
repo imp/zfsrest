@@ -48,8 +48,9 @@ class Zpool():
 if __name__ == "__main__":
     import sys
     import pprint as pp
+    import nvpair
 
     poolname = "test" if len(sys.argv) < 2 else sys.argv[1]
     pool = Zpool(poolname)
     pp.pprint(pool.state())
-    pp.pprint(pool.config())
+    pp.pprint(nvpair.nvl2dict(pool.config()))
