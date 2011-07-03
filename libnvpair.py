@@ -507,14 +507,101 @@ def nvpair_value_nvlist(nvp):
         raise _error(ret)
     return val
 
-def nvpair_value_nvlist_array(nvp):
-    val = nvlist_pp()
-    array = []
+def nvpair_value_int8_array(nvp):
+    val = c_int8_p()
     nelem = C.c_uint()
-    ret = _nvpair_value_nvlist_array(nvp, C.byref(val), C.byref(nelem))
-    #print "found", nelem, "elements"
+    ret = _nvpair_value_int8_array(nvp, C.byref(val), C.byref(nelem))
     if ret != 0:
         raise _error(ret)
+    array = []
+    for n in range(nelem.value):
+        array.append(val[n])
+    return array
+
+def nvpair_value_uint8_array(nvp):
+    val = c_uint8_p()
+    nelem = C.c_uint()
+    ret = _nvpair_value_uint8_array(nvp, C.byref(val), C.byref(nelem))
+    if ret != 0:
+        raise _error(ret)
+    array = []
+    for n in range(nelem.value):
+        array.append(val[n])
+    return array
+
+def nvpair_value_int16_array(nvp):
+    val = c_int16_p()
+    nelem = C.c_uint()
+    ret = _nvpair_value_int16_array(nvp, C.byref(val), C.byref(nelem))
+    if ret != 0:
+        raise _error(ret)
+    array = []
+    for n in range(nelem.value):
+        array.append(val[n])
+    return array
+
+def nvpair_value_uint16_array(nvp):
+    val = c_uint16_p()
+    nelem = C.c_uint()
+    ret = _nvpair_value_uint16_array(nvp, C.byref(val), C.byref(nelem))
+    if ret != 0:
+        raise _error(ret)
+    array = []
+    for n in range(nelem.value):
+        array.append(val[n])
+    return array
+
+def nvpair_value_int32_array(nvp):
+    val = c_int32_p()
+    nelem = C.c_uint()
+    ret = _nvpair_value_int32_array(nvp, C.byref(val), C.byref(nelem))
+    if ret != 0:
+        raise _error(ret)
+    array = []
+    for n in range(nelem.value):
+        array.append(val[n])
+    return array
+
+def nvpair_value_uint32_array(nvp):
+    val = c_uint32_p()
+    nelem = C.c_uint()
+    ret = _nvpair_value_uint32_array(nvp, C.byref(val), C.byref(nelem))
+    if ret != 0:
+        raise _error(ret)
+    array = []
+    for n in range(nelem.value):
+        array.append(val[n])
+    return array
+
+def nvpair_value_int64_array(nvp):
+    val = c_int64_p()
+    nelem = C.c_uint()
+    ret = _nvpair_value_int64_array(nvp, C.byref(val), C.byref(nelem))
+    if ret != 0:
+        raise _error(ret)
+    array = []
+    for n in range(nelem.value):
+        array.append(val[n])
+    return array
+
+def nvpair_value_uint64_array(nvp):
+    val = c_uint64_p()
+    nelem = C.c_uint()
+    ret = _nvpair_value_uint64_array(nvp, C.byref(val), C.byref(nelem))
+    if ret != 0:
+        raise _error(ret)
+    array = []
+    for n in range(nelem.value):
+        array.append(val[n])
+    return array
+
+def nvpair_value_nvlist_array(nvp):
+    val = nvlist_pp()
+    nelem = C.c_uint()
+    ret = _nvpair_value_nvlist_array(nvp, C.byref(val), C.byref(nelem))
+    if ret != 0:
+        raise _error(ret)
+    array = []
     for n in range(nelem.value):
         array.append(val[n])
     return array
