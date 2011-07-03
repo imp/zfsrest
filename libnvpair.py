@@ -392,28 +392,28 @@ def nvlist_lookup_int64(nvl, name):
     ret = _nvlist_lookup_int64(nvl, name, C.byref(val))
     if ret != 0:
         raise _error(ret)
-    return val.value
+    return val
 
 def nvlist_lookup_uint64(nvl, name):
     val = C.c_uint64()
     ret = _nvlist_lookup_uint64(nvl, name, C.byref(val))
     if ret != 0:
         raise _error(ret)
-    return val.value
+    return val
 
 def nvlist_lookup_string(nvl, name):
     val = C.c_char_p()
     ret = _nvlist_lookup_string(nvl, name, C.byref(val))
     if ret != 0:
         raise _error(ret)
-    return val.value
+    return val
 
 def nvlist_lookup_nvlist(nvl, name):
     val = nvlist_p()
     ret = _nvlist_lookup_nvlist(nvl, name, C.byref(val))
     if ret != 0:
         raise _error(ret)
-    return val.value
+    return val
 
 def nvlist_next_nvpair(nvl, nvp=None):
     return _nvlist_next_nvpair(nvl, nvp)
@@ -435,56 +435,70 @@ def nvpair_value_byte(nvp):
     ret = _nvpair_value_byte(nvp, C.byref(val))
     if ret != 0:
         raise _error(ret)
-    return val.value
+    return val
 
 def nvpair_value_int8(nvp):
     val = C.c_int8()
     ret = _nvpair_value_int8(nvp, C.byref(val))
     if ret != 0:
         raise _error(ret)
-    return val.value
+    return val
 
 def nvpair_value_uint8(nvp):
     val = C.c_uint8()
     ret = _nvpair_value_uint8(nvp, C.byref(val))
     if ret != 0:
         raise _error(ret)
-    return val.value
+    return val
 
 def nvpair_value_int16(nvp):
     val = C.c_int16()
     ret = _nvpair_value_int16(nvp, C.byref(val))
     if ret != 0:
         raise _error(ret)
-    return val.value
+    return val
 
 def nvpair_value_uint16(nvp):
     val = C.c_uint16()
     ret = _nvpair_value_uint16(nvp, C.byref(val))
     if ret != 0:
         raise _error(ret)
-    return val.value
+    return val
+
+def nvpair_value_int32(nvp):
+    val = C.c_int32()
+    ret = _nvpair_value_int32(nvp, C.byref(val))
+    if ret != 0:
+        raise _error(ret)
+    return val
+
+def nvpair_value_uint32(nvp):
+    val = C.c_uint32()
+    ret = _nvpair_value_uint32(nvp, C.byref(val))
+    if ret != 0:
+        raise _error(ret)
+    return val
 
 def nvpair_value_int64(nvp):
     val = C.c_int64()
     ret = _nvpair_value_int64(nvp, C.byref(val))
     if ret != 0:
         raise _error(ret)
-    return val.value
+    return val
 
 def nvpair_value_uint64(nvp):
     val = C.c_uint64()
     ret = _nvpair_value_uint64(nvp, C.byref(val))
     if ret != 0:
         raise _error(ret)
-    return val.value
+    return val
 
 def nvpair_value_string(nvp):
     val = C.c_char_p()
     ret = _nvpair_value_string(nvp, C.byref(val))
     if ret != 0:
         raise _error(ret)
-    return val.value
+    return val
 
 def nvpair_value_nvlist(nvp):
     val = nvlist_p()
@@ -504,4 +518,3 @@ def nvpair_value_nvlist_array(nvp):
     for n in range(nelem.value):
         array.append(val[n])
     return array
-

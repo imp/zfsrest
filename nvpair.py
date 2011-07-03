@@ -26,21 +26,21 @@ class nvpair():
         if type == DATA_TYPE_BOOLEAN:
             pass
         elif type == DATA_TYPE_BYTE:
-            value = libnvpair._nvpair_value_byte(self._nvp)
+            value = libnvpair._nvpair_value_byte(self._nvp).value
         elif type == DATA_TYPE_INT16:
-            value = nvpair_value_int16(self._nvp)
+            value = nvpair_value_int16(self._nvp).value
         elif type == DATA_TYPE_UINT16:
-            value = nvpair_value_uint16(self._nvp)
+            value = nvpair_value_uint16(self._nvp).value
         elif type == DATA_TYPE_INT32:
-            value = nvpair_value_int32(self._nvp)
+            value = nvpair_value_int32(self._nvp).value
         elif type == DATA_TYPE_UINT32:
-            value = nvpair_value_uint32(self._nvp)
+            value = nvpair_value_uint32(self._nvp).value
         elif type == DATA_TYPE_INT64:
-            value = nvpair_value_int64(self._nvp)
+            value = nvpair_value_int64(self._nvp).value
         elif type == DATA_TYPE_UINT64:
-            value = nvpair_value_uint64(self._nvp)
+            value = nvpair_value_uint64(self._nvp).value
         elif type == DATA_TYPE_STRING:
-            value = nvpair_value_string(self._nvp)
+            value = nvpair_value_string(self._nvp).value
         elif type == DATA_TYPE_BYTE_ARRAY:
             pass
         elif type == DATA_TYPE_INT16_ARRAY:
@@ -66,9 +66,9 @@ class nvpair():
         elif type == DATA_TYPE_BOOLEAN_VALUE:
             pass
         elif type == DATA_TYPE_INT8:
-            value = nvpair_value_int8(self._nvp)
+            value = nvpair_value_int8(self._nvp).value
         elif type == DATA_TYPE_UINT8:
-            value = nvpair_value_uint8(self._nvp)
+            value = nvpair_value_uint8(self._nvp).value
         elif type == DATA_TYPE_BOOLEAN_ARRAY:
             pass
         elif type == DATA_TYPE_INT8_ARRAY:
