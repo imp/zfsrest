@@ -7,7 +7,7 @@
 #
 import ctypes as C
 
-import libnvpair as nv
+from nvpair import *
 
 EZFS_NOMEM          = 2000      # Out of memory
 EZFS_BADPROP        = 2001      # Invalid property value
@@ -291,13 +291,16 @@ zpool_label_disk        = __libzfs.zpool_label_disk
 # * Statistics and configuration functions.
 # */
 # nvlist_t *zpool_get_config(zpool_handle_t *, nvlist_t **);
-zpool_get_config            = __libzfs.zpool_get_config
-zpool_get_config.argtypes   = [zpool_handle_ptr, nv.nvlist_pp]
-zpool_get_config.restype    = nv.nvlist_p
+_zpool_get_config            = __libzfs.zpool_get_config
+_zpool_get_config.argtypes   = [zpool_handle_ptr, nvlist_pp]
+_zpool_get_config.restype    = nvlist_p
 #extern int zpool_refresh_stats(zpool_handle_t *, boolean_t *);
 #extern int zpool_get_errlog(zpool_handle_t *, nvlist_t **);
 
 
+def zpool_get_config(pool):
+    cfg = _zpool_get_config(pool, None)
+    return nvlist(cfg)
 
 if __name__ == "__main__":
     import pprint as pp

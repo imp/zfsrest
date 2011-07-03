@@ -103,6 +103,7 @@ class nvlist_t(C.Structure):
 
 nvlist_p = C.POINTER(nvlist_t)
 nvlist_pp = C.POINTER(nvlist_p)
+nvlist_ppp = C.POINTER(nvlist_pp)
 
 
 # nvp implementation version
@@ -214,8 +215,14 @@ _nvlist_lookup_int64.argtypes    = [nvlist_p, C.c_char_p, c_int64_p]
 _nvlist_lookup_uint64            = __libnvpair.nvlist_lookup_uint64
 _nvlist_lookup_uint64.argtypes   = [nvlist_p, C.c_char_p, c_uint64_p]
 
-#int nvlist_lookup_string(nvlist_t *, const char *, char **);
-#int nvlist_lookup_nvlist(nvlist_t *, const char *, nvlist_t **);
+# int nvlist_lookup_string(nvlist_t *, const char *, char **)
+_nvlist_lookup_string            = __libnvpair.nvlist_lookup_string
+_nvlist_lookup_string.argtypes   = [nvlist_p, C.c_char_p, c_char_pp]
+
+# int nvlist_lookup_nvlist(nvlist_t *, const char *, nvlist_t **)
+_nvlist_lookup_nvlist            = __libnvpair.nvlist_lookup_nvlist
+_nvlist_lookup_nvlist.argtypes   = [nvlist_p, C.c_char_p, nvlist_pp]
+
 #int nvlist_lookup_boolean_array(nvlist_t *, const char *,
 #    boolean_t **, uint_t *);
 #int nvlist_lookup_byte_array(nvlist_t *, const char *, uchar_t **, uint_t *);
@@ -230,6 +237,8 @@ _nvlist_lookup_uint64.argtypes   = [nvlist_p, C.c_char_p, c_uint64_p]
 #int nvlist_lookup_string_array(nvlist_t *, const char *, char ***, uint_t *);
 #int nvlist_lookup_nvlist_array(nvlist_t *, const char *,
 #    nvlist_t ***, uint_t *);
+_nvlist_lookup_nvlist_array      = __libnvpair.nvlist_lookup_nvlist_array
+
 #int nvlist_lookup_hrtime(nvlist_t *, const char *, hrtime_t *);
 #int nvlist_lookup_pairs(nvlist_t *, int, ...);
 #int nvlist_lookup_double(nvlist_t *, const char *, double *);
@@ -354,7 +363,9 @@ _nvpair_value_uint64_array.argtypes = [nvpair_p, c_uint64_pp, c_uint_p]
 
 #int nvpair_value_string_array(nvpair_t *, char ***, uint_t *);
 
-#int nvpair_value_nvlist_array(nvpair_t *, nvlist_t ***, uint_t *);
+# int nvpair_value_nvlist_array(nvpair_t *, nvlist_t ***, uint_t *)
+_nvpair_value_nvlist_array       = __libnvpair.nvpair_value_nvlist_array
+_nvpair_value_nvlist_array.argtypes = [nvpair_p, nvlist_ppp, c_uint_p]
 
 #int nvpair_value_hrtime(nvpair_t *, hrtime_t *);
 
@@ -386,6 +397,20 @@ def nvlist_lookup_int64(nvl, name):
 def nvlist_lookup_uint64(nvl, name):
     val = C.c_uint64()
     ret = _nvlist_lookup_uint64(nvl, name, C.byref(val))
+    if ret != 0:
+        raise _error(ret)
+    return val.value
+
+def nvlist_lookup_string(nvl, name):
+    val = C.c_char_p()
+    ret = _nvlist_lookup_string(nvl, name, C.byref(val))
+    if ret != 0:
+        raise _error(ret)
+    return val.value
+
+def nvlist_lookup_nvlist(nvl, name):
+    val = nvlist_p()
+    ret = _nvlist_lookup_nvlist(nvl, name, C.byref(val))
     if ret != 0:
         raise _error(ret)
     return val.value
@@ -434,8 +459,49 @@ def nvpair_value_int16(nvp):
     return val.value
 
 def nvpair_value_uint16(nvp):
-    val = C.c_uint8()
+    val = C.c_uint16()
     ret = _nvpair_value_uint16(nvp, C.byref(val))
     if ret != 0:
         raise _error(ret)
     return val.value
+
+def nvpair_value_int64(nvp):
+    val = C.c_int64()
+    ret = _nvpair_value_int64(nvp, C.byref(val))
+    if ret != 0:
+        raise _error(ret)
+    return val.value
+
+def nvpair_value_uint64(nvp):
+    val = C.c_uint64()
+    ret = _nvpair_value_uint64(nvp, C.byref(val))
+    if ret != 0:
+        raise _error(ret)
+    return val.value
+
+def nvpair_value_string(nvp):
+    val = C.c_char_p()
+    ret = _nvpair_value_string(nvp, C.byref(val))
+    if ret != 0:
+        raise _error(ret)
+    return val.value
+
+def nvpair_value_nvlist(nvp):
+    val = nvlist_p()
+    ret = _nvpair_value_nvlist(nvp, C.byref(val))
+    if ret != 0:
+        raise _error(ret)
+    return val
+
+def nvpair_value_nvlist_array(nvp):
+    val = nvlist_pp()
+    array = []
+    nelem = C.c_uint()
+    ret = _nvpair_value_nvlist_array(nvp, C.byref(val), C.byref(nelem))
+    #print "found", nelem, "elements"
+    if ret != 0:
+        raise _error(ret)
+    for n in range(nelem.value):
+        array.append(val[n])
+    return array
+

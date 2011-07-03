@@ -10,96 +10,15 @@ import UserDict
 from libnvpair import *
 
 
-def nvl2dict(nvl):
-    _data = {}
-    nvp = _nvlist_next_nvpair(nvl, None)
-    while nvp:
-        value = None
-        name = _nvpair_name(nvp)
-        type = _nvpair_type(nvp)
-        if type == DATA_TYPE_BOOLEAN:
-            pass
-        elif type == DATA_TYPE_BYTE:
-            value = C.c_byte()
-            _nvpair_value_byte(nvp, C.byref(value))
-        elif type == DATA_TYPE_INT16:
-            value = C.c_int16()
-            _nvpair_value_int16(nvp, C.byref(value))
-        elif type == DATA_TYPE_UINT16:
-            value = C.c_uint16()
-            _nvpair_value_uint16(nvp, C.byref(value))
-        elif type == DATA_TYPE_INT32:
-            value = C.c_int32()
-            _nvpair_value_int32(nvp, C.byref(value))
-        elif type == DATA_TYPE_UINT32:
-            value = C.c_uint32()
-            _nvpair_value_uint32(nvp, C.byref(value))
-        elif type == DATA_TYPE_INT64:
-            value = C.c_int64()
-            _nvpair_value_int64(nvp, C.byref(value))
-        elif type == DATA_TYPE_UINT64:
-            value = C.c_uint64()
-            _nvpair_value_uint64(nvp, C.byref(value))
-        elif type == DATA_TYPE_STRING:
-            value = C.c_char_p()
-            _nvpair_value_string(nvp, C.byref(value))
-        elif type == DATA_TYPE_BYTE_ARRAY:
-            pass
-        elif type == DATA_TYPE_INT16_ARRAY:
-            pass
-        elif type == DATA_TYPE_UINT16_ARRAY:
-            pass
-        elif type == DATA_TYPE_INT32_ARRAY:
-            pass
-        elif type == DATA_TYPE_UINT32_ARRAY:
-            pass
-        elif type == DATA_TYPE_INT64_ARRAY:
-            pass
-        elif type == DATA_TYPE_UINT64_ARRAY:
-            pass
-        elif type == DATA_TYPE_STRING_ARRAY:
-            pass
-        elif type == DATA_TYPE_HRTIME:
-            pass
-        elif type == DATA_TYPE_NVLIST:
-            pass
-        elif type == DATA_TYPE_NVLIST_ARRAY:
-            pass
-        elif type == DATA_TYPE_BOOLEAN_VALUE:
-            pass
-        elif type == DATA_TYPE_INT8:
-            value = C.c_int8()
-            _nvpair_value_int8(nvp, C.byref(value))
-        elif type == DATA_TYPE_UINT8:
-            value = C.c_uint8()
-            _nvpair_value_uint8(nvp, C.byref(value))
-        elif type == DATA_TYPE_BOOLEAN_ARRAY:
-            pass
-        elif type == DATA_TYPE_INT8_ARRAY:
-            pass
-        elif type == DATA_TYPE_UINT8_ARRAY:
-            pass
-        elif type == DATA_TYPE_DOUBLE:
-            pass
-
-        print "Found", name, "of", type, "value", value
-        if value is not None:
-            _data[name] = value.value
-        # And fetch the next nvpair
-        nvp = _nvlist_next_nvpair(nvl, nvp)
-
-    return _data
-
-
 class nvpair():
     def __init__(self, nvp=None):
         self._nvp = nvp
 
     def name(self):
-        return _nvpair_name(self._nvp) if self._nvp else None
+        return nvpair_name(self._nvp) if self._nvp else None
 
     def type(self):
-        return _nvpair_type(nvp) if self._nvp else None
+        return nvpair_type(self._nvp) if self._nvp else None
 
     def value(self):
         type = self.type()
@@ -107,29 +26,21 @@ class nvpair():
         if type == DATA_TYPE_BOOLEAN:
             pass
         elif type == DATA_TYPE_BYTE:
-            value = C.c_byte()
-            libnvpair._nvpair_value_byte(nvp, C.byref(value))
+            value = libnvpair._nvpair_value_byte(self._nvp)
         elif type == DATA_TYPE_INT16:
-            value = C.c_int16()
-            _nvpair_value_int16(nvp, C.byref(value))
+            value = nvpair_value_int16(self._nvp)
         elif type == DATA_TYPE_UINT16:
-            value = C.c_uint16()
-            _nvpair_value_uint16(nvp, C.byref(value))
+            value = nvpair_value_uint16(self._nvp)
         elif type == DATA_TYPE_INT32:
-            value = C.c_int32()
-            _nvpair_value_int32(nvp, C.byref(value))
+            value = nvpair_value_int32(self._nvp)
         elif type == DATA_TYPE_UINT32:
-            value = C.c_uint32()
-            _nvpair_value_uint32(nvp, C.byref(value))
+            value = nvpair_value_uint32(self._nvp)
         elif type == DATA_TYPE_INT64:
-            value = C.c_int64()
-            _nvpair_value_int64(nvp, C.byref(value))
+            value = nvpair_value_int64(self._nvp)
         elif type == DATA_TYPE_UINT64:
-            value = C.c_uint64()
-            _nvpair_value_uint64(nvp, C.byref(value))
+            value = nvpair_value_uint64(self._nvp)
         elif type == DATA_TYPE_STRING:
-            value = C.c_char_p()
-            _nvpair_value_string(nvp, C.byref(value))
+            value = nvpair_value_string(self._nvp)
         elif type == DATA_TYPE_BYTE_ARRAY:
             pass
         elif type == DATA_TYPE_INT16_ARRAY:
@@ -149,17 +60,15 @@ class nvpair():
         elif type == DATA_TYPE_HRTIME:
             pass
         elif type == DATA_TYPE_NVLIST:
-            pass
+            value = nvlist(nvpair_value_nvlist(self._nvp))
         elif type == DATA_TYPE_NVLIST_ARRAY:
-            pass
+            value = [nvlist(n) for n in nvpair_value_nvlist_array(self._nvp)]
         elif type == DATA_TYPE_BOOLEAN_VALUE:
             pass
         elif type == DATA_TYPE_INT8:
-            value = C.c_int8()
-            _nvpair_value_int8(nvp, C.byref(value))
+            value = nvpair_value_int8(self._nvp)
         elif type == DATA_TYPE_UINT8:
-            value = C.c_uint8()
-            _nvpair_value_uint8(nvp, C.byref(value))
+            value = nvpair_value_uint8(self._nvp)
         elif type == DATA_TYPE_BOOLEAN_ARRAY:
             pass
         elif type == DATA_TYPE_INT8_ARRAY:
@@ -169,9 +78,23 @@ class nvpair():
         elif type == DATA_TYPE_DOUBLE:
             pass
 
-        return value.value
+        return value
 
+    def __str__(self):
+        return "<" + self.name() + "(" + str(self.type()) + ") " + str(self.value()) + ">"
 
-class NVList(UserDict.IterableUserDict):
+class nvlist(UserDict.IterableUserDict):
     def __init__(self, nvl):
-        self.data = nvl2dict(nvl)
+        self._nvl = nvl
+        nvld = {}
+        self._nvpairs = {}
+        nvp = nvlist_next_nvpair(self._nvl, None)
+	while nvp:
+            nvld[nvpair_name(nvp)] = nvpair(nvp).value()
+            self._nvpairs[nvpair_name(nvp)] = nvpair(nvp)
+            nvp = nvlist_next_nvpair(self._nvl, nvp)
+        UserDict.IterableUserDict.__init__(self, nvld)
+
+    def aget(self, key):  
+        return self._nvpairs[key].value()
+
