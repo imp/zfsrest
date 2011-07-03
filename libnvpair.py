@@ -6,6 +6,7 @@
 # ctypes libnvpair wrapper
 #
 import ctypes as C
+import errno
 
 (DATA_TYPE_UNKNOWN,
 DATA_TYPE_BOOLEAN,
@@ -358,3 +359,83 @@ _nvpair_value_uint64_array.argtypes = [nvpair_p, c_uint64_pp, c_uint_p]
 #int nvpair_value_hrtime(nvpair_t *, hrtime_t *);
 
 #int nvpair_value_double(nvpair_t *, double *);
+
+class NVPairError(Exception): pass
+
+class NVPairInvalid(NVPairError): pass
+
+class NVPairNotFound(NVPairError): pass
+
+class NVPairNotSupported(NVPairError): pass
+
+def _error(errno):
+    if errno == errno.EINVAL:
+        return NVPairInvalid()
+    elif errno == errno.ENOENT:
+        return NVPairNotFound()
+    elif errno == errno.ENOTSUP:
+        return NVPairNotSupported()
+
+def nvlist_lookup_int64(nvl, name):
+    val = C.c_int64()
+    ret = _nvlist_lookup_int64(nvl, name, C.byref(val))
+    if ret != 0:
+        raise _error(ret)
+    return val.value
+
+def nvlist_lookup_uint64(nvl, name):
+    val = C.c_uint64()
+    ret = _nvlist_lookup_uint64(nvl, name, C.byref(val))
+    if ret != 0:
+        raise _error(ret)
+    return val.value
+
+def nvlist_next_nvpair(nvl, nvp=None):
+    return _nvlist_next_nvpair(nvl, nvp)
+
+def nvlist_prev_nvpair(nvl, nvp=None):
+    return _nvlist_prev_nvpair(nvl, nvp)
+
+def nvpair_name(nvp):
+    return _nvpair_name(nvp)
+
+def nvpair_type(nvp):
+    return _nvpair_type(nvp)
+
+def nvpair_value_is_array(nvp):
+    return _nvpair_type_is_array(nvp)
+
+def nvpair_value_byte(nvp):
+    val = C.c_byte()
+    ret = _nvpair_value_byte(nvp, C.byref(val))
+    if ret != 0:
+        raise _error(ret)
+    return val.value
+
+def nvpair_value_int8(nvp):
+    val = C.c_int8()
+    ret = _nvpair_value_int8(nvp, C.byref(val))
+    if ret != 0:
+        raise _error(ret)
+    return val.value
+
+def nvpair_value_uint8(nvp):
+    val = C.c_uint8()
+    ret = _nvpair_value_uint8(nvp, C.byref(val))
+    if ret != 0:
+        raise _error(ret)
+    return val.value
+
+def nvpair_value_int16(nvp):
+    val = C.c_int16()
+    ret = _nvpair_value_int16(nvp, C.byref(val))
+    if ret != 0:
+        raise _error(ret)
+    return val.value
+
+def nvpair_value_uint16(nvp):
+    val = C.c_uint8()
+    ret = _nvpair_value_uint16(nvp, C.byref(val))
+    if ret != 0:
+        raise _error(ret)
+    return val.value
