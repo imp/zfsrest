@@ -44,17 +44,17 @@ class nvpair():
         elif type == DATA_TYPE_BYTE_ARRAY:
             pass
         elif type == DATA_TYPE_INT16_ARRAY:
-            pass
+            value = [n.value for n in nvpair_value_int16_array(self._nvp)]
         elif type == DATA_TYPE_UINT16_ARRAY:
-            pass
+            value = [n.value for n in nvpair_value_uint16_array(self._nvp)]
         elif type == DATA_TYPE_INT32_ARRAY:
-            pass
+            value = [n.value for n in nvpair_value_int32_array(self._nvp)]
         elif type == DATA_TYPE_UINT32_ARRAY:
-            pass
+            value = [n.value for n in nvpair_value_uint32_array(self._nvp)]
         elif type == DATA_TYPE_INT64_ARRAY:
-            pass
+            value = [n.value for n in nvpair_value_int64_array(self._nvp)]
         elif type == DATA_TYPE_UINT64_ARRAY:
-            pass
+            value = [n.value for n in nvpair_value_uint64_array(self._nvp)]
         elif type == DATA_TYPE_STRING_ARRAY:
             pass
         elif type == DATA_TYPE_HRTIME:
