@@ -21,6 +21,16 @@ ZPOOL_CONFIG_VDEV_TREE      = 'vdev_tree'
 ZPOOL_CONFIG_TYPE           = 'type'
 ZPOOL_CONFIG_CHILDREN       = 'children'
 
+def _todict(nvl):
+    d = {}
+    for nvp in nvl:
+        if isinstance(nvp, libnvpair.nvlist):
+            d[nvp.name()] = _todict(nvp)
+        else:
+            d[nvp.name()] = nvp.value()
+    return d
+
+
 class Zpool():
     def __init__(self, name):
         self._name = name
@@ -31,20 +41,22 @@ class Zpool():
 
     def status(self):
         cfg = self.config()
-        status = dict(cfg)
-        status['vdev_tree'] = dict(status['vdev_tree'])
-	children = []
-	for child in status['vdev_tree']['children']:
-	    children1 = []
-	    for child1 in child['children']:
-                children1.append(dict(child1))
-            child['children'] = children1
-            children.append(dict(child))
-        status['vdev_tree']['children'] = children
-        l2cache = []
-	for cache in status['vdev_tree']['l2cache']:
-            l2cache.append(dict(cache))
-        status['vdev_tree']['l2cache'] = l2cache
+        status = _todict(cfg)
+
+#        status = dict(cfg)
+#        status['vdev_tree'] = dict(status['vdev_tree'])
+#	children = []
+#	for child in status['vdev_tree']['children']:
+#	    children1 = []
+#	    for child1 in child['children']:
+#                children1.append(dict(child1))
+#            child['children'] = children1
+#            children.append(dict(child))
+#        status['vdev_tree']['children'] = children
+#        l2cache = []
+#	for cache in status['vdev_tree']['l2cache']:
+#            l2cache.append(dict(cache))
+#        status['vdev_tree']['l2cache'] = l2cache
 
         return status
 
