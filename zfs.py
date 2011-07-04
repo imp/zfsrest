@@ -5,7 +5,6 @@
 #
 # ctypes libzfs wrapper
 #
-import ctypes as C
 import libzfs
 import libnvpair
 
@@ -60,7 +59,6 @@ class Zpool():
 if __name__ == "__main__":
     import sys
     import pprint as pp
-    import nvpair
 
     poolname = "test" if len(sys.argv) < 2 else sys.argv[1]
     pool = Zpool(poolname)

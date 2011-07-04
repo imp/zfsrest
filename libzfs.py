@@ -7,7 +7,7 @@
 #
 import ctypes as C
 
-from nvpair import *
+from libnvpair import *
 
 EZFS_NOMEM          = 2000      # Out of memory
 EZFS_BADPROP        = 2001      # Invalid property value
