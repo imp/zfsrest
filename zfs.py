@@ -32,9 +32,22 @@ class Zpool():
 
     def status(self):
         cfg = self.config()
-        status = {}
+        status = dict(cfg)
+        status['vdev_tree'] = dict(status['vdev_tree'])
+	children = []
+	for child in status['vdev_tree']['children']:
+	    children1 = []
+	    for child1 in child['children']:
+                children1.append(dict(child1))
+            child['children'] = children1
+            children.append(dict(child))
+        status['vdev_tree']['children'] = children
+        l2cache = []
+	for cache in status['vdev_tree']['l2cache']:
+            l2cache.append(dict(cache))
+        status['vdev_tree']['l2cache'] = l2cache
 
-        return "OK"
+        return status
 
     def config(self):
         _cfg = libzfs.zpool_get_config(self._handle)
@@ -53,9 +66,7 @@ if __name__ == "__main__":
     pool = Zpool(poolname)
     pp.pprint(pool.state())
 
-    pp.pprint(dict(pool.config()))
-    vdevtree = pool.config()['vdev_tree']
-    pp.pprint(dict(vdevtree))
+    pp.pprint(pool.status())
 #    pp.pprint(pool.config().get('version'))
 #    pp.pprint(pool.config().get('name'))
 #    pp.pprint(pool.config().get('state'))
